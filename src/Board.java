@@ -16,6 +16,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final Player player;
     private final List<Sprite> sprites;
     private final Set<Integer> activeKeyCodes;
+    private final Ball ball;
 
     public Board() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
@@ -24,7 +25,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         player = new Player();
         Wall wall = new Wall(BOARD_WIDTH / 2 - WALL_WIDTH / 2,
                 BOARD_HEIGHT / 2 - WALL_WIDTH / 2);
-        sprites = new ArrayList<>(List.of(player, wall));
+        ball = new Ball(BALL_IMAGE_PATH, BOARD_WIDTH / 2 - BALL_WIDTH / 2,
+                WALL_HEIGHT / 2 - BALL_WIDTH / 2,60, 60, 15, 15);
+        sprites = new ArrayList<>(List.of(ball));
 
         activeKeyCodes = new HashSet<>();
 
