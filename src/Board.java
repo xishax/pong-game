@@ -13,6 +13,8 @@ import static utils.Constants.*;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
 
+    private final LeftPaddle leftPaddle;
+    private final RightPaddle rightPaddle;
     private final Player player;
     private final List<Sprite> sprites;
     private final Set<Integer> activeKeyCodes;
@@ -25,8 +27,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         player = new Player();
         Wall wall = new Wall(BOARD_WIDTH / 2 - WALL_WIDTH / 2,
                 BOARD_HEIGHT / 2 - WALL_WIDTH / 2);
-        ball = new Ball(BALL_IMAGE_PATH, BOARD_WIDTH / 2 - BALL_WIDTH / 2,
-                WALL_HEIGHT / 2 - BALL_WIDTH / 2,60, 60, 15, 15);
+        ball = new Ball();
+        leftPaddle = new LeftPaddle();
+        rightPaddle = new RightPaddle();
         sprites = new ArrayList<>(List.of(ball));
 
         activeKeyCodes = new HashSet<>();
@@ -41,14 +44,18 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         for(Sprite sprite : sprites) {
             sprite.tick();
         }
-
-        for(Sprite sprite : sprites) {
-            if(player.isColliding(sprite)) {
-                player.handleCollision(sprite);
-            }
+        //implement deleted method
+        //if(ball.isColliding(LeftPaddle rightPaddle)) {
+            //bounce right
+        //} else if (ball.isColliding(RightPaddle rightPaddle)) {
+            //bounce left
         }
 
-        repaint();
+        //if (ball.isColliding(topWall) || ball.isColliding(bottomWall)) {
+
+        }
+
+        //repaint();
     }
 
     @Override
