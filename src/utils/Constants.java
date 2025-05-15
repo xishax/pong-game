@@ -31,6 +31,7 @@ public final class Constants {
     //Paddle constants
     public static final String LEFT_PADDLE_IMAGE_PATH = "resources/leftPaddle.png";
     public static final String RIGHT_PADDLE_IMAGE_PATH = "resources/rightPaddle.png";
-    public static final int PADDLE_WIDTH = 50;
-    public static final int PADDLE_HEIGHT = 50;
+    public static final int PADDLE_WIDTH = 400;
+    public static final int PADDLE_HEIGHT = 450;
+    public static final int PADDLE_SPEED = 7;
 }

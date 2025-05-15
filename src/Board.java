@@ -22,7 +22,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public Board() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        setBackground(Color.GRAY);
+        setBackground(Color.cyan);
 
         player = new Player();
         Wall wall = new Wall(BOARD_WIDTH / 2 - WALL_WIDTH / 2,
@@ -30,7 +30,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         ball = new Ball();
         leftPaddle = new LeftPaddle();
         rightPaddle = new RightPaddle();
-        sprites = new ArrayList<>(List.of(ball));
+        sprites = new ArrayList<>(List.of(ball,leftPaddle, rightPaddle));
 
         activeKeyCodes = new HashSet<>();
 
@@ -39,32 +39,48 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        leftPaddle.handleActiveKeys(activeKeyCodes);
+        rightPaddle.handleActiveKeys(activeKeyCodes);
         player.handleActiveKeys(activeKeyCodes);
 
         for(Sprite sprite : sprites) {
             sprite.tick();
         }
-        //implement deleted method
-        //if(ball.isColliding(LeftPaddle rightPaddle)) {
-            //bounce right
-        //} else if (ball.isColliding(RightPaddle rightPaddle)) {
-            //bounce left
+
+
+        if(ball.isColliding(leftPaddle)) {
+            ball.bounceRight();
+        } else if (ball.isColliding(rightPaddle)) {
+            ball.bounceLeft();
         }
 
-        //if (ball.isColliding(topWall) || ball.isColliding(bottomWall)) {
-
+        if (ball.getPos().y <= 0 || ball.getPos().y >= BOARD_HEIGHT) {
+            ball.flipVY();
         }
 
-        //repaint();
+        if (ball.getPos().x <= BOARD_HEIGHT) {
+            //handle right player wins a point
+        } else if (ball.getPos().x >= BOARD_HEIGHT) {
+            //handleleft player wins a point
+        }
+        //if (ball.isColliding(topWall) || ball.isColliding(bottomWall)) {}
+        repaint();
     }
 
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
 
+
+        graphics.setFont(new Font("Arial", Font.PLAIN, 25));
+        graphics.drawString("Player 1 Score: ", 20, 50);
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Player 2 Score: ", 380, 50);
+
         for(Sprite sprite : sprites) {
             sprite.draw(graphics, this);
         }
+
     }
 
     @Override

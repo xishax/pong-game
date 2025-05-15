@@ -43,17 +43,17 @@ public class Ball extends Sprite {
         if (pos.x <= 0 || pos.x >= BOARD_WIDTH - BALL_WIDTH) {
             vx = -vx;
         }
-        //pos.x = Math.clamp(pos.x, 0, BOARD_WIDTH - BALL_WIDTH);
-        //pos.y = Math.clamp(pos.x, 0, BOARD_HEIGHT - BALL_HEIGHT);
+        pos.x = Math.clamp(pos.x, 0, BOARD_WIDTH - BALL_WIDTH);
+        pos.y = Math.clamp(pos.x, 0, BOARD_HEIGHT - BALL_HEIGHT);
 
     }
 
-    public void bounceLeft(LeftPaddle leftPaddle) {
-        vx = -Math.abs(vx) * 1.2;
+    public void bounceLeft() {
+        //vx = -Math.abs(vx) * 1.2;
     }
 
-    public void bounceRight(RightPaddle rightPaddle) {
-        vx = Math.abs(vx) * 1.2;
+    public void bounceRight() {
+        //vx = Math.abs(vx) * 1.2;
     }
 
     public void flipVY() {
