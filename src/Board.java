@@ -19,6 +19,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final List<Sprite> sprites;
     private final Set<Integer> activeKeyCodes;
     private final Ball ball;
+    private final Score score;
+    private final TopWall topWall;
+    private final BottomWall bottomWall;
 
     public Board() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
@@ -30,7 +33,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         ball = new Ball();
         leftPaddle = new LeftPaddle();
         rightPaddle = new RightPaddle();
-        sprites = new ArrayList<>(List.of(ball,leftPaddle, rightPaddle));
+        score = new Score(0,0);
+        topWall = new TopWall(0,0);
+        bottomWall= new BottomWall(100,100);
+        sprites = new ArrayList<>(List.of(ball,leftPaddle, rightPaddle, topWall, bottomWall));
 
         activeKeyCodes = new HashSet<>();
 
@@ -54,16 +60,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             ball.bounceLeft();
         }
 
-        if (ball.getPos().y <= 0 || ball.getPos().y >= BOARD_HEIGHT) {
-            ball.flipVY();
+        if (ball.getPos().x <= -BALL_WIDTH) {
+            //handle right player wins a point
+            score.incrementPlayerTwoScore();
+        } else if (ball.getPos().x >= BOARD_WIDTH) {
+            //handleleft player wins a point
+            score.incrementPlayerOneScore();
         }
 
-        if (ball.getPos().x <= BOARD_HEIGHT) {
-            //handle right player wins a point
-        } else if (ball.getPos().x >= BOARD_HEIGHT) {
-            //handleleft player wins a point
-        }
-        //if (ball.isColliding(topWall) || ball.isColliding(bottomWall)) {}
         repaint();
     }
 
@@ -73,9 +77,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
 
         graphics.setFont(new Font("Arial", Font.PLAIN, 25));
-        graphics.drawString("Player 1 Score: ", 20, 50);
+        graphics.drawString("Score: " + score.getPlayerOneScore(), 20, 50);
         graphics.setColor(Color.BLACK);
-        graphics.drawString("Player 2 Score: ", 380, 50);
+        graphics.drawString("Score: " + score.getPlayerTwoScore(), 460, 50);
 
         for(Sprite sprite : sprites) {
             sprite.draw(graphics, this);

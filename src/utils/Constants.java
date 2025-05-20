@@ -19,8 +19,10 @@ public final class Constants {
 
     // Wall constants
     public static final String WALL_IMAGE_PATH = "resources/wall.png";
-    public static final int WALL_WIDTH = 150;
-    public static final int WALL_HEIGHT = 150;
+    public static final String TOP_WALL_IMAGE_PATH = "resources/topWall.webp";
+    public static final String BOTTOM_WALL_IMAGE_PATH = "resources/bottomWall.webp";
+    public static final int WALL_WIDTH = 400;
+    public static final int WALL_HEIGHT = 200;
 
     //Ball constants
     public static final String BALL_IMAGE_PATH = "resources/ball.png";
@@ -31,7 +33,7 @@ public final class Constants {
     //Paddle constants
     public static final String LEFT_PADDLE_IMAGE_PATH = "resources/leftPaddle.png";
     public static final String RIGHT_PADDLE_IMAGE_PATH = "resources/rightPaddle.png";
-    public static final int PADDLE_WIDTH = 400;
-    public static final int PADDLE_HEIGHT = 450;
+    public static final int PADDLE_WIDTH = 70;
+    public static final int PADDLE_HEIGHT = 300;
     public static final int PADDLE_SPEED = 7;
 }

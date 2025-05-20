@@ -3,8 +3,8 @@ import java.util.Random;
 import static utils.Constants.*;
 
 public class Ball extends Sprite {
-    private int vx;
-    private int vy;
+    private double vx;
+    private double vy;
 
     public Ball() {
         super(BALL_IMAGE_PATH, BOARD_WIDTH / 2 - WALL_WIDTH / 2,
@@ -34,7 +34,7 @@ public class Ball extends Sprite {
 
     @Override
     public void tick() {
-        pos.translate(vx, vy);
+        pos.translate((int)vx, (int)vy);
 
         if (pos.y <= 0 || pos.y >= BOARD_HEIGHT - BALL_HEIGHT) {
             vy = -vy;
@@ -43,17 +43,14 @@ public class Ball extends Sprite {
         if (pos.x <= 0 || pos.x >= BOARD_WIDTH - BALL_WIDTH) {
             vx = -vx;
         }
-        pos.x = Math.clamp(pos.x, 0, BOARD_WIDTH - BALL_WIDTH);
-        pos.y = Math.clamp(pos.x, 0, BOARD_HEIGHT - BALL_HEIGHT);
-
     }
 
     public void bounceLeft() {
-        //vx = -Math.abs(vx) * 1.2;
+        vx = -Math.abs(vx) * 1.1;
     }
 
     public void bounceRight() {
-        //vx = Math.abs(vx) * 1.2;
+        vx = Math.abs(vx) * 1.1;
     }
 
     public void flipVY() {
