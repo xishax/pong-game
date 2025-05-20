@@ -26,5 +26,6 @@ public class Score {
 
     /*if (playerOneScore == 11 || playerTwoScore == 11) {
         //end game
+
     }*/
 }
