@@ -21,13 +21,13 @@ public class Ball extends Sprite {
             vx = BALL_SPEED;
             vy = -BALL_SPEED;
         } else if (randNum == 1) {
-            vx = -BALL_SPEED;
+            vx = BALL_SPEED;
             vy = BALL_SPEED;
         } else if (randNum == 2) {
             vx = -BALL_SPEED;
             vy = BALL_SPEED;
         } else {
-            vx = BALL_SPEED;
+            vx = -BALL_SPEED;
             vy = -BALL_SPEED;
         }
     }
@@ -40,9 +40,6 @@ public class Ball extends Sprite {
             vy = -vy;
         }
 
-        if (pos.x <= 0 || pos.x >= BOARD_WIDTH - BALL_WIDTH) {
-            vx = -vx;
-        }
     }
 
     public void bounceLeft() {
@@ -55,5 +52,10 @@ public class Ball extends Sprite {
 
     public void flipVY() {
         vy = -vy;
+    }
+
+    public void ballStop() {
+        vx = 0;
+        vy = 0;
     }
 }

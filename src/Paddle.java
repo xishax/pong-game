@@ -3,14 +3,12 @@ import java.util.Set;
 
 import static utils.Constants.*;
 
-public class LeftPaddle extends Sprite{
-    private int upKey;
-    private int downKey;
+public class Paddle extends Sprite{
     private double dx;
     private double dy;
 
-    public LeftPaddle() {
-        super(LEFT_PADDLE_IMAGE_PATH, 30, 70, PADDLE_WIDTH, PADDLE_HEIGHT);
+    public Paddle(int x, int y) {
+        super(PADDLE_IMAGE_PATH, x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
     @Override
@@ -20,11 +18,20 @@ public class LeftPaddle extends Sprite{
         pos.y = Math.clamp(pos.y, 0, BOARD_HEIGHT - PADDLE_HEIGHT);
     }
 
-    public void handleActiveKeys(Set<Integer> activeKeyCodes) {
+    public void leftHandleActiveKeys(Set<Integer> activeKeyCodes) {
         dy = 0;
         if (activeKeyCodes.contains(KeyEvent.VK_W)) {
             dy -= PADDLE_SPEED;
         } else if (activeKeyCodes.contains(KeyEvent.VK_S)) {
+            dy += PADDLE_SPEED;
+        }
+    }
+
+    public void rightHandleActiveKeys(Set<Integer> activeKeyCodes) {
+        dy = 0;
+        if (activeKeyCodes.contains(KeyEvent.VK_UP)) {
+            dy -= PADDLE_SPEED;
+        } else if (activeKeyCodes.contains(KeyEvent.VK_DOWN)) {
             dy += PADDLE_SPEED;
         }
     }

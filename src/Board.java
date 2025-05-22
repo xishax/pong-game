@@ -13,30 +13,30 @@ import static utils.Constants.*;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
 
-    private final LeftPaddle leftPaddle;
-    private final RightPaddle rightPaddle;
+    private final Paddle leftPaddle;
+    private final Paddle rightPaddle;
     private final Player player;
     private final List<Sprite> sprites;
     private final Set<Integer> activeKeyCodes;
     private final Ball ball;
     private final Score score;
-    private final TopWall topWall;
-    private final BottomWall bottomWall;
+    private final Wall topWall;
+    private final Wall bottomWall;
+    private int rallyCounter;
 
     public Board() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         setBackground(Color.cyan);
 
+        rallyCounter = 0;
         player = new Player();
-        Wall wall = new Wall(BOARD_WIDTH / 2 - WALL_WIDTH / 2,
-                BOARD_HEIGHT / 2 - WALL_WIDTH / 2);
         ball = new Ball();
-        leftPaddle = new LeftPaddle();
-        rightPaddle = new RightPaddle();
+        leftPaddle = new Paddle(30,70);
+        rightPaddle = new Paddle(500,70);
         score = new Score(0,0);
-        topWall = new TopWall(0,0);
-        bottomWall= new BottomWall(100,100);
-        sprites = new ArrayList<>(List.of(ball,leftPaddle, rightPaddle, topWall, bottomWall));
+        topWall = new Wall(0,0);
+        bottomWall= new Wall(0,520);
+        sprites = new ArrayList<>(List.of(ball, leftPaddle, rightPaddle, topWall, bottomWall));
 
         activeKeyCodes = new HashSet<>();
 
@@ -45,14 +45,13 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        leftPaddle.handleActiveKeys(activeKeyCodes);
-        rightPaddle.handleActiveKeys(activeKeyCodes);
+        leftPaddle.leftHandleActiveKeys(activeKeyCodes);
+        rightPaddle.rightHandleActiveKeys(activeKeyCodes);
         player.handleActiveKeys(activeKeyCodes);
 
         for(Sprite sprite : sprites) {
             sprite.tick();
         }
-
 
         if(ball.isColliding(leftPaddle)) {
             ball.bounceRight();
@@ -60,12 +59,23 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             ball.bounceLeft();
         }
 
+        if (ball.isColliding(topWall)) {
+            ball.flipVY();
+        } else if (ball.isColliding(bottomWall)) {
+            ball.flipVY();
+        }
+
         if (ball.getPos().x <= -BALL_WIDTH) {
             //handle right player wins a point
             score.incrementPlayerTwoScore();
+            ball.resetBall();
         } else if (ball.getPos().x >= BOARD_WIDTH) {
-            //handleleft player wins a point
+            //handle left player wins a point
             score.incrementPlayerOneScore();
+            ball.resetBall();
+        }
+        if (ball.isColliding(leftPaddle) || ball.isColliding(rightPaddle) || ball.isColliding(topWall) || ball.isColliding(bottomWall)) {
+            rallyCounter = rallyCounter + 1;
         }
 
         repaint();
@@ -75,16 +85,24 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public void paint(Graphics graphics) {
         super.paint(graphics);
 
-
         graphics.setFont(new Font("Arial", Font.PLAIN, 25));
         graphics.drawString("Score: " + score.getPlayerOneScore(), 20, 50);
-        graphics.setColor(Color.BLACK);
         graphics.drawString("Score: " + score.getPlayerTwoScore(), 460, 50);
+        graphics.setColor(Color.BLACK);
 
         for(Sprite sprite : sprites) {
             sprite.draw(graphics, this);
         }
 
+        if (score.getPlayerOneScore() == 11) {
+            ball.ballStop();
+            graphics.drawString("Player One Wins!",200,350);
+            graphics.drawString("Rally Counter: " + rallyCounter, 200,400 );
+        }else if (score.getPlayerTwoScore() == 11) {
+            ball.ballStop();
+            graphics.drawString("Player Two Wins!",200,350);
+            graphics.drawString("RallyCounter: "  + rallyCounter, 200, 400);
+        }
     }
 
     @Override
