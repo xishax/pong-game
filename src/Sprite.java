@@ -11,12 +11,6 @@ public abstract class Sprite {
     protected Dimension size;
     private BufferedImage image;
 
-    public Sprite(String imagePath, int x, int y) {
-        pos = new Point(x, y);
-        loadImage(imagePath);
-        size = new Dimension(image.getWidth(), image.getHeight());
-    }
-
     public Sprite(String imagePath, int x, int y, int width, int height) {
         pos = new Point(x, y);
         loadImage(imagePath);

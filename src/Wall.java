@@ -6,6 +6,5 @@ public class Wall extends Sprite {
     }
 
     @Override
-    public void tick() {
-    }
+    public void tick() {}
 }
