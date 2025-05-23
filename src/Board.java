@@ -15,7 +15,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
-    private final Player player;
     private final List<Sprite> sprites;
     private final Set<Integer> activeKeyCodes;
     private final Ball ball;
@@ -29,7 +28,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         setBackground(Color.cyan);
 
         rallyCounter = 0;
-        player = new Player();
         ball = new Ball();
         leftPaddle = new Paddle(30,70);
         rightPaddle = new Paddle(500,70);
@@ -47,7 +45,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         leftPaddle.leftHandleActiveKeys(activeKeyCodes);
         rightPaddle.rightHandleActiveKeys(activeKeyCodes);
-        player.handleActiveKeys(activeKeyCodes);
 
         for(Sprite sprite : sprites) {
             sprite.tick();
@@ -66,11 +63,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
 
         if (ball.getPos().x <= -BALL_WIDTH) {
-            //handle right player wins a point
             score.incrementPlayerTwoScore();
             ball.resetBall();
         } else if (ball.getPos().x >= BOARD_WIDTH) {
-            //handle left player wins a point
             score.incrementPlayerOneScore();
             ball.resetBall();
         }

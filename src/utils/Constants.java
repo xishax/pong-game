@@ -11,12 +11,6 @@ public final class Constants {
     // A delay of 25 milliseconds results in a frame rate of 45 FPS.
     public static final int TICK_DELAY = 25;
 
-    // Player constants
-    public static final String PLAYER_IMAGE_PATH = "resources/amogus.png";
-    public static final int PLAYER_WIDTH = 60;
-    public static final int PLAYER_HEIGHT = 80;
-    public static final int PLAYER_SPEED = 10;
-
     // Wall constants
     public static final String WALL_IMAGE_PATH = "resources/wall.jpg";
     public static final int WALL_WIDTH = 600;
@@ -29,7 +23,7 @@ public final class Constants {
     public static final int BALL_SPEED= 10;
 
     //Paddle constants
-    public static final String PADDLE_IMAGE_PATH = "resources/leftPaddle.png";
+    public static final String PADDLE_IMAGE_PATH = "resources/paddle.png";
     public static final int PADDLE_WIDTH = 70;
     public static final int PADDLE_HEIGHT = 200;
     public static final int PADDLE_SPEED = 7;
